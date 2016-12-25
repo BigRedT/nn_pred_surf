@@ -1,2 +1,6 @@
 *.pyc
 *~
+*demo*
+*.png
+*#*
+.DS_Store

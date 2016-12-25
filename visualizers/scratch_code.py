@@ -1,0 +1,6 @@
+# fig = plt.figure()
+# ax = fig.gca(projection='3d')
+# ax.view_init(elev=-90.,azim=90.)
+# ax.w_zaxis.line.set_lw(0.)
+# ax.set_zticks([])
+# ax.set_axis_off()

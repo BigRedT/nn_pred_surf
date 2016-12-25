@@ -16,7 +16,7 @@ def sample_training_data(
     # To draw 10 samples in R^2 where the first dimension ranges between (-1,1)
     # and the second dimension between (2,3), the call looks like
 
-    samples = sample_training_data(10,[(-1,1),(2,3)])
+    # samples = sample_training_data(10,[(-1,1),(2,3)])
 
     num_dims = len(domain)
     samples = np.zeros([num_samples,num_dims])
@@ -33,16 +33,16 @@ def sample_grid_data(
     # Args:
     #   - domain : A list of tuples specifying the range along each dimension
     #   - steps : A list specifying step size along each dimension
-    #   - reshape : If True, also returns the reshaped grid
+    #   - reshape : If True, also reshapes the grid to #samples x #dimensions
 
     # Returns:
-    #   - grid: A list of length len(domain) where grid[i] is an ndarray of 
+    #   - meshgrid: A list of length len(domain) where grid[i] is an ndarray of 
     #       grid samples along the ith dimension
     #   - samples: Only returned if reshape is True. Returns the grid samples
     #       as a 2D array. 
 
     # Example:
-    # grid, samples = sample_grid_data([(-1,1),(2,3)],[0.1,0.3])
+    # meshgrid, samples = sample_grid_data([(-1,1),(2,3)],[0.1,0.3])
 
     assert(len(domain)==len(steps)), 'domain and steps need to be of the same size'
 
@@ -52,7 +52,7 @@ def sample_grid_data(
     for (l,h), step in zip(domain,steps):
         coords.append(np.arange(l,h,step,np.float32))
 
-    grid = np.meshgrid(*coords,indexing='ij')
+    meshgrid = np.meshgrid(*coords,indexing='ij')
     
     if reshape:
         num_samples = 1
@@ -60,12 +60,20 @@ def sample_grid_data(
             num_samples *= len(coord)
         
         samples = np.zeros([num_samples,num_dims])
-        for i in range(len(grid)):
-            samples[:,i] = np.reshape(grid[i],-1)
+        for i in range(len(meshgrid)):
+            samples[:,i] = grid2array(meshgrid[i])
             
-        return grid, samples
+        return meshgrid, samples
 
-    return grid
+    return meshgrid
+
+
+def grid2array(grid):
+    return np.reshape(grid,-1)
+
+
+def array2grid(array,grid_size):
+    return np.reshape(array,grid_size)
 
 
     
