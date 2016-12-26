@@ -2,11 +2,13 @@ import numpy as np
 
 
 def sample_training_data(
-    num_samples,
-    domain):
+        num_samples,
+        domain,
+        seed=None):
     # Args:
     #   - num_samples : Number of training samples to generate
     #   - domain : A list of tuples specifying the range along each dimension
+    #   - seed : Seed for the random number generator
     
     # Returns:
     #   - samples : num_samples x len(domain) matrix consisting of samples drawn 
@@ -18,6 +20,9 @@ def sample_training_data(
 
     # samples = sample_training_data(10,[(-1,1),(2,3)])
 
+    if seed is not None:
+        np.random.seed(seed)
+        
     num_dims = len(domain)
     samples = np.zeros([num_samples,num_dims])
     for i, (l,h) in enumerate(domain):
