@@ -78,4 +78,9 @@ class Graph():
         opt = tf.GradientDescentOptimizer(learning_rate=learning_rate)
         train_op = opt.minimize(loss)
             
+    def create_feed_dict(self, inputs):
+        feed_dict = dict()
+        for plh_name, plh_value in inputs.items():
+            feed_dict[self.plh[plh_name]] = plh_value
 
+        return feed_dict
