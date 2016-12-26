@@ -1,6 +1,9 @@
 import numpy as np
 import tensorflow as tf
-import pyAIUtils.aiutils.tftools as tftools 
+from pyAIUtils.aiutils.tftools import layers
+
+import tensorflow as tf
+
 
 class Inference():
     def __init__(
@@ -42,21 +45,23 @@ class Inference():
                     hidden_units[i])
                 
         with tf.variable_scope('output_layer'):
-            self.output_layer = tftools.layers.full(
+            self.output_layer = layers.full(
                 self.hidden_layers[-1],
                 2,
+                'fc',
                 func=None)
 
             self.prob = tf.nn.softmax(self.output_layer)
 
     def create_hidden_layer(self, input, num_hidden_units):
-        hidden_layer = tftools.layers.full(
+        hidden_layer = layers.full(
             input,
             num_hidden_units,
+            'fc_layer',
             func=None)
         
         if self.use_batchnorm:
-            hidden_layer = tftools.layers.batch_norm(
+            hidden_layer = layers.batch_norm(
                 hidden_layer,
                 tf.constant(self.is_training))
 
