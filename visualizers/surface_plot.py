@@ -45,7 +45,7 @@ def pred_surf_plot(
     ax.set_xlim(domain[0][0], domain[0][1])
     ax.set_ylabel('y',fontweight='bold')
     ax.set_ylim(domain[1][0], domain[1][1])
-    ax.set_zlabel('pred',fontweight='bold',labelpad=10.)
+    ax.set_zlabel('pred',fontweight='bold')
     ax.set_zlim(-2, 1.)
 
     if title:

@@ -3,7 +3,7 @@ import tensorflow as tf
 from pyAIUtils.aiutils.tftools import layers
 
 import tensorflow as tf
-
+import pdb
 
 class Inference():
     def __init__(
@@ -63,9 +63,19 @@ class Inference():
         if self.use_batchnorm:
             hidden_layer = layers.batch_norm(
                 hidden_layer,
-                tf.constant(self.is_training))
+                self.is_training)
 
-        hidden_layer = self.activation(hidden_layer)
+        if self.activation=='relu':
+            hidden_layer = tf.nn.relu(hidden_layer)
+        elif self.activation=='sigmoid':
+            hidden_layer = tf.nn.sigmoid(hidden_layer)
+        elif self.activation=='tanh':
+            hidden_layer = tf.nn.tanh(hidden_layer)
+        elif self.activation=='elu':
+            hidden_layer = tf.nn.elu(hidden_layer)
+        else:
+            assert(False), 'activation should be relu or sigmoid'
+        
         hidden_layer = tf.nn.dropout(hidden_layer,self.keep_prob)
 
         return hidden_layer

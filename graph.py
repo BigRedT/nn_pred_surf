@@ -3,6 +3,8 @@ from inference import Inference
 import tensorflow as tf
 import numpy as np
 from pyAIUtils.aiutils.tftools import placeholder_management
+import pdb
+
 
 class Graph():
     def __init__(
@@ -12,7 +14,6 @@ class Graph():
             activation,
             keep_prob,
             use_batchnorm,
-            is_training,
             learning_rate):
         # Args:
         #   - input_dims : The dimension of a single sample
@@ -20,10 +21,7 @@ class Graph():
         #   - activation : Activation function to use such as tf.nn.relu
         #   - keep_prob : Keep probability to be used for dropout
         #   - use_batchnorm : If True, batch normalization is applied to each hidden layer
-        #   - is_training : Mode distinguishing training vs test
         #   - learning_rate : learning rate to be used if is_training is True
-
-        self.is_training = is_training
         
         self.tf_graph = tf.Graph()
         with self.tf_graph.as_default():
@@ -36,7 +34,7 @@ class Graph():
                     activation,
                     keep_prob,
                     use_batchnorm,
-                    is_training)
+                    self.plh['is_training'])
 
             with tf.variable_scope('loss'):
                 logits = self.inference.get_logits()
@@ -45,9 +43,8 @@ class Graph():
                     self.plh['labels'])
                 self.total_loss = self.losses['cross_entropy'] + 1e-4*self.losses['regularization']
                 
-            if is_training:
-                with tf.variable_scope('optimizer'):
-                    self.train_op = self.attach_optimizer(self.total_loss,learning_rate)
+            with tf.variable_scope('optimizer'):
+                self.train_op = self.attach_optimizer(self.total_loss,learning_rate)
 
             self.init = tf.initialize_all_variables()
             
@@ -63,6 +60,11 @@ class Graph():
             'labels',
             tf.float32,
             [None])
+
+        plh.add_placeholder(
+            'is_training',
+            tf.bool,
+            [])
 
         return plh
 
@@ -103,9 +105,6 @@ class Graph():
         return feed_dict
 
     def get_train_op(self):
-        assert_str = 'train_op is only available in train mode,' + \
-                     'i.e. when is_training is True'
-        assert(self.is_training), assert_str
         return self.train_op
 
     def eval_vars(self,vars_to_eval,feed_dict,sess):
