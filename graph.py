@@ -14,7 +14,8 @@ class Graph():
             activation,
             keep_prob,
             use_batchnorm,
-            learning_rate):
+            learning_rate,
+            seed=1):
         # Args:
         #   - input_dims : The dimension of a single sample
         #   - hidden_units : A list containing the number of units in each hidden layer
@@ -25,6 +26,7 @@ class Graph():
         
         self.tf_graph = tf.Graph()
         with self.tf_graph.as_default():
+            tf.set_random_seed(seed)
             self.plh = self.create_placeholders(input_dims)
             
             with tf.variable_scope('inference'):
