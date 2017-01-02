@@ -20,14 +20,16 @@ After running these commands, make sure the pyAIUtils directory is created and h
 
 # Code Overview
 
-See nn_pred_surf/experiments directory for example scripts. Each of these scripts uses the `Constants` class to store network specifications. An object of this class is passed on to `run_experiments.run()` which [samples data](./data), [creates a tensorflow computation graph](./graph.py), trains the network and produces a decision surface.
+See nn_pred_surf/experiments directory for example scripts. Each of these scripts uses the `Constants` class to store network specifications. An object of this class is passed on to `run_experiments.run()` which [samples data](./data), [creates a tensorflow computation graph](./graph.py), [trains the network](./train.py) and [produces a decision surface](./visualizers).
 
-Visualize effect of:
-- Architectural choices
-  - Depth
-  - Width
-  - Simple vs Resnet
-  - Sigmoid vs Relu
-  - Deterministic vs Dropout vs Batchnorm
-- Number of training samples
-- Complexity of Decision function
+# Usage
+
+Feel free to use the code and any material on the [blog]() as long as you attribute it correctly. For publications you may use the following BibTex citation
+```
+@misc{gupta2016nnpredsurf,
+  author = {Gupta, Tanmay},
+  title = {Visualizing the effects of neural network architectural choices},
+  year = {2016},
+  howpublished = {}
+}
+```
