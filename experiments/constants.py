@@ -10,11 +10,12 @@ class Constants():
     pred_filename = 'pred'
     gt_filename = 'gt'
     input_dims = 2
-    hidden_units = [10,10]
+    hidden_units = [10]*4
+    residual = [False]*4
     activation = 'relu'
     keep_prob = 1.
     use_batchnorm = False
-    is_training = True
+    # is_training = True
     learning_rate = 0.01
     batch_size = 1000
     num_epochs = 100

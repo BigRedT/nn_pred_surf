@@ -68,6 +68,7 @@ def run(c):
     network = graph.Graph(
         c.input_dims,
         c.hidden_units,
+        c.residual,
         c.activation,
         c.keep_prob,
         c.use_batchnorm,

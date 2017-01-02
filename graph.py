@@ -11,11 +11,12 @@ class Graph():
             self,
             input_dims,
             hidden_units,
+            residual,
             activation,
             keep_prob,
             use_batchnorm,
             learning_rate,
-            seed=1):
+            seed=2):
         # Args:
         #   - input_dims : The dimension of a single sample
         #   - hidden_units : A list containing the number of units in each hidden layer
@@ -33,6 +34,7 @@ class Graph():
                 self.inference = Inference(
                     self.plh['data'],
                     hidden_units,
+                    residual,
                     activation,
                     keep_prob,
                     use_batchnorm,
@@ -127,5 +129,5 @@ class Graph():
             assert(False), 'loss_type not found'
 
     def initialize(self,sess):
-        sess.run(self.init)
+        sess.run(self.init,feed_dict = {self.plh['is_training']: True})
             

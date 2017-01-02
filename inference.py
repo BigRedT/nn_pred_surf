@@ -10,6 +10,7 @@ class Inference():
             self,
             data,
             hidden_units,
+            residual,
             activation,
             keep_prob,
             use_batchnorm,
@@ -36,13 +37,15 @@ class Inference():
         with tf.variable_scope('hidden_layer_0'):
             self.hidden_layers[0] = self.create_hidden_layer(
                 data,
-                hidden_units[0])
+                hidden_units[0],
+                residual[0])
             
         for i in range(1,num_hidden_layers):
             with tf.variable_scope('hidden_layer_' + str(i)):
                 self.hidden_layers[i] = self.create_hidden_layer(
                     self.hidden_layers[i-1],
-                    hidden_units[i])
+                    hidden_units[i],
+                    residual[i])
                 
         with tf.variable_scope('output_layer'):
             self.output_layer = layers.full(
@@ -53,7 +56,7 @@ class Inference():
 
             self.prob = tf.nn.softmax(self.output_layer)
 
-    def create_hidden_layer(self, input, num_hidden_units):
+    def create_hidden_layer(self, input, num_hidden_units, residual):
         hidden_layer = layers.full(
             input,
             num_hidden_units,
@@ -65,21 +68,27 @@ class Inference():
                 hidden_layer,
                 self.is_training)
 
-        if self.activation=='relu':
-            hidden_layer = tf.nn.relu(hidden_layer)
-        elif self.activation=='sigmoid':
-            hidden_layer = tf.nn.sigmoid(hidden_layer)
-        elif self.activation=='tanh':
-            hidden_layer = tf.nn.tanh(hidden_layer)
-        elif self.activation=='elu':
-            hidden_layer = tf.nn.elu(hidden_layer)
-        else:
-            assert(False), 'activation should be relu or sigmoid'
-        
-        hidden_layer = tf.nn.dropout(hidden_layer,self.keep_prob)
+        if residual:
+            hidden_layer += input
+            
+        hidden_layer = self.apply_activation(hidden_layer,self.activation)
+        hidden_layer = layers.dropout(hidden_layer,self.is_training,self.keep_prob)
+        # hidden_layer = tf.nn.dropout(hidden_layer,self.keep_prob)
 
         return hidden_layer
-        
+
+    def apply_activation(self, x, activation):
+        if self.activation=='relu':
+            return tf.nn.relu(x)
+        elif self.activation=='sigmoid':
+            return tf.nn.sigmoid(x)
+        elif self.activation=='tanh':
+            return tf.nn.tanh(x)
+        elif self.activation=='elu':
+            return tf.nn.elu(x)
+        else:
+            assert(False), 'activation should be relu or sigmoid'
+            
     def get_logits(self):
         return self.output_layer
 
