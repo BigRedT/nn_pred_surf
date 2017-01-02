@@ -18,6 +18,10 @@ git submodule update
 ```
 After running these commands, make sure the pyAIUtils directory is created and has aiutils directory inside it.
 
+# Code Overview
+
+See nn_pred_surf/experiments directory for example scripts. Each of these scripts uses the `Constants` class to store network specifications. An object of this class is passed on to `run_experiments.run()` which [samples data](./data), [creates a tensorflow computation graph](./graph.py), trains the network and produces a decision surface.
+
 Visualize effect of:
 - Architectural choices
   - Depth
