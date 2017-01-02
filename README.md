@@ -7,7 +7,16 @@ The code allows you to easily visualize the prediction surface of any neural net
 - Tensorflow 0.12
 - Numpy
 - Matplotlib
+- [pyAIUtils](https://github.com/BigRedT/pyAIUtils)
 
+# Setup
+
+Install all the above dependencies except pyAIUtils. Clone the repository and run the following commands inside the created directory to setup pyAIUtils which is used as submodule.
+"""
+git submodule init
+git submodule update
+"""
+After running these commands, make sure the pyAIUtils directory is created and has aiutils directory inside it.
 
 Visualize effect of:
 - Architectural choices
