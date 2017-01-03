@@ -4,7 +4,7 @@ The code allows you to easily visualize the prediction surface of any neural net
 
 # Example
 
-The following result compares the effect of different activations - `sigmoid`, `tanh`, `relu`, and `elu`, on learning 4 different decision functions. 
+The following result compares the effect of commonly used activations on learning 4 different decision functions. 
 ![effect_of_activations](./images/effect_of_activations.png)
 
 # Dependencies
