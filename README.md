@@ -2,6 +2,11 @@
 
 The code allows you to easily visualize the prediction surface of any neural network for any 2D data. This was written partially for generating results for [one of my blog posts](http://ahumaninmachinesworld.blogspot.in/2016/12/visualizing-effects-of-neural-network.html). But in addition I have tried to make it easy to try out various tweaks, either your own or one of the many published on arXiv, for improving training and data efficiency of neural networks.
 
+# Example
+
+The following result compares the effect of different activations - `sigmoid`, `tanh`, `relu`, and `elu`, on learning 4 different decision functions. 
+![effect_of_activations](./images/effect_of_activations.png)
+
 # Dependencies
 
 - Tensorflow 0.12
