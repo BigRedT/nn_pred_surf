@@ -86,6 +86,8 @@ class Inference():
             return tf.nn.tanh(x)
         elif self.activation=='elu':
             return tf.nn.elu(x)
+        elif self.activation=='swish':
+            return x*tf.nn.sigmoid(x)
         else:
             assert(False), 'activation should be relu or sigmoid'
             

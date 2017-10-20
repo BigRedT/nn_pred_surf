@@ -10,8 +10,7 @@ def main():
     c = constants.Constants()
     c.experiment_name = 'effect_of_activation'
     c.hidden_units = [10]*4
-    activations = ['relu', 'sigmoid', 'tanh', 'elu']
-    
+    activations = ['relu', 'sigmoid', 'tanh', 'elu', 'swish']
 
     decision_funcs = dict()
     decision_funcs['line'] = lambda x: decision_functions.ax_b(
